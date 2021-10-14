@@ -1,0 +1,113 @@
+% Компилировать xelatex'ом!
+\documentclass[a4paper,12pt]{article}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath, enumerate, multicol, listings}
+\usepackage{xunicode, xltxtra, xecyr}
+\setmainfont{Droid Serif}
+\setmonofont{Droid Sans Mono}
+
+% Поля
+\usepackage{geometry}
+\geometry{left=2cm}
+\geometry{right=1.5cm}
+\geometry{top=1cm}
+\geometry{bottom=2cm}
+
+% Полезности
+\input{stuff}
+
+
+\begin{document}
+
+  % Заголовок
+  \labtitle{Лабораторная работа №2}{Управление процессами}
+  
+  % Описание
+  \begin{flushleft}
+    Команды Windows для работы с процессами:
+    \begin{itemize}
+     \item {\bf SCHTASKS} - настраивает выполнение команд по расписанию.
+     \item {\bf START} - запускает определенную программу или команду в отдельном окне.
+     \item {\bf TASKKILL} - завершает процесс.
+     \item {\bf TASKLIST} - выводит информацию о работающих процессах.
+    \end{itemize}
+  \end{flushleft}
+  
+
+  % Вводная
+  \begin{flushleft}
+    Для выполнения лабораторной работы необходимо запустить командную строку, это можно сделать двумя способами:
+    \begin{flushleft}
+        \begin{enumerate} [1. ]
+        \item Пуск -> Выполнить -> {\bf cmd}
+        \item Пуск -> Программы -> Стандартные -> {\bf «Командная строка»} \\[0.4cm]
+        \end{enumerate}
+    \end{flushleft}
+  \end{flushleft}
+
+  \begin{flushleft}
+  Для получения более подробной информации, можно использовать центр справки и поддержки Windows или консольную справку по команде с помощью ключа {\bf /?}, например, для просмотра справки по команде {\bf SCHTASKS} необходимо выполнить следующую команду {\bf SCHTASKS /?}\\[0.2cm]
+  \end{flushleft}
+
+  \newpage
+
+  \begin{center}
+    {\bf Практические задания}
+  \end{center}
+
+  \begin{flushleft}
+    \begin{enumerate} [1. ]
+     \item Запустите Windows
+     \item Запустить командную строку
+     \item Составьте справочник для выше приведенных команд(на русском языке), расписав какие параметры для чего нужны.
+     \item Что нужно уметь:
+      \begin{enumerate} [\bf a. ]
+        \item Создать задание на запуск процесса в определённое время, Например: создать задание на запуск программы БЛОКНОТ в определённое время
+        \begin{flushleft}
+          \cmd {schtasks /Create /SC ONCE /ST "время" /TN "название задания" /TR notepad.exe}
+        \end{flushleft}
+        \item Отобразить список заданий на выполнение по времени, список задач отобразить в табличном и списочном варианте.
+        \begin{flushleft}
+          \cmd {schtasks /Query /TN "название задание" /FO LIST} для вывода в списочном варианте\\
+          \cmd {schtasks /Query /TN "название задание"} для вывода в табличном варианте
+        \end{flushleft}
+        \item Изменить программу, которая должна быть выполнена в определённое время, например вместо программы БЛОКНОТ будет выполняться программа КАЛЬКУЛЯТОР
+        \begin{flushleft}
+          \cmd {schtasks /Change /TN "название задания" /TR calc.exe}
+        \end{flushleft}
+        \item Удалить задание
+        \begin{flushleft}
+         \cmd {schtasks /Delete /TN "название задания"}
+        \end{flushleft}
+        \item Запустить программу в отдельном окне в различных режимах, например, запустить программу БЛОКНОТ в развернутом окне и в свернутом окне, и с ожидание его завершения
+        \begin{flushleft}
+          \cmd {start /MIN notepad.exe} - в свернутом окне\\
+          \cmd {start /MAX notepad.exe} - в развернутом окне\\
+          \cmd {start /WAIT notepad.exe} - с ожиданием завершения
+        \end{flushleft}
+        \item Отобразить список процессов выполняющихся на рабочей станции
+        \begin{flushleft}
+         \cmd {tasklist}
+        \end{flushleft}
+        \item Отфильтровать список процессов так чтобы в нем остались только запущенные нами программы БЛОКНОТ в предыдущем задании
+        \begin{flushleft}
+         \cmd {tasklist /FI "IMAGENAME eq notepad.exe"}
+        \end{flushleft}
+        \item Отобразить пользователя, который запустил на выполнение эти процессы
+        \begin{flushleft}
+         \cmd {tasklist /FI "IMAGENAME eq notepad.exe" /V}
+        \end{flushleft}
+        \item Завершить процесс по номеру PID (идентификатор процесса)
+        \begin{flushleft}
+         \cmd {taskkill /PID "pid"}
+        \end{flushleft}
+        \item Завершить процесс по имени образа процесса, например, завершить все программы NOTEPAD.EXE 
+        \begin{flushleft}
+         \cmd {taskkill /FI "IMAGENAME eq notepad.exe"} \\ [1.5cm]
+        \end{flushleft}
+        \end{enumerate}
+    \end{enumerate}
+
+  \end{flushleft}
+
+\end{document}
